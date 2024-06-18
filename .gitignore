@@ -1,0 +1,4 @@
+# Development Files for IDE's
+.idea
+.vscode
+__pycache__
