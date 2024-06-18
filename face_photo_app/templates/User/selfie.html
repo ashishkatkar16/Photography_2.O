@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Face Recognization</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/User/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/User/dist/css/style.css">
+  <link rel="stylesheet" href="static/User/dist/fontawesome/css/all.min.css">
+  <script src="static/User/dist/js/jquery.slim.min.js"></script>
+  <script src="static/User/dist/js/popper.min.js"></script>
+  <script src="static/User/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  
+<div class="container-fluid bg h-100 p-0">
+  <div class="row h-100 justify-content-center align-items-center mx-0">
+    <div class="col-4">
+      <div class = "card">
+		<div class = "card-body text-center px-5">
+			<h2 class = "text-primary font-weight-bold  text-center mb-3">Upload Selfie</h2>
+			<i class = "fa fa-camera fa-2x mb-3"></i> <br>
+			
+			<small>Upload Your Selfie</small> <br><br>
+			
+			<label class="uploadFile text-center">
+			    <span class="filename">Select Files</span>
+				<i class="fas fa-upload fa-md ml-2"></i>
+				<input type="file" class="inputfile form-control" name="file" multiple = "multiple">
+			</label>
+			
+			<a href = "{% url 'user_dashboard' %}"><button class = "btn btn-primary btn-sm w-100" type = "button">Proceed</button></a>
+		</div>
+	  </div>
+    </div>   
+  </div>
+</div>
+</body>
+</html>
