@@ -1,0 +1,40 @@
+body, html {
+  height: 100%;
+}
+.bg{
+	background : url("../../dist/img/Enter PIN.png");
+	background-size: cover;
+	background-position:center;
+	background-repeat:no-repeat;
+	height: 100%; 
+}
+.uploadFile {
+  width: 30%;
+  background-color: white;
+  border: 1px dashed #7e9fed;
+  color: grey;
+  font-size: 16px;
+  line-height: 23px;
+  overflow: hidden;
+  padding: 22px 10px 22px 10px;
+  position: relative;
+  resize: none;
+  width:100%;
+}
+  .inputfile{
+    cursor: pointer !important;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0px;
+    text-align: right;
+    top: 0px;
+    z-index: 1;
+  }
+   .flex-column {
+            max-width: 260px;
+        }

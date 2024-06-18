@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Face Recognition</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/Admin/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/Admin/dist/css/style.css">
+  <link rel="stylesheet" href="static/Admin/dist/fontawesome/css/all.min.css">
+  <script src="static/Admin/dist/js/jquery.slim.min.js"></script>
+  <script src="static/Admin/dist/js/popper.min.js"></script>
+  <script src="static/Admin/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/Admin/dist/js/custom.js"></script>
+</head>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <!-- Button  -->
+  
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand text-center">
+        <a href="#">Welcome Back</a>
+        <div id="close-sidebar"><i class="fa fa-times"></i></div>
+      </div>
+      <!-- sidebar-brand -->
+      <div class="sidebar-header text-center">
+        <div class="user-pic mb-3" style="color:#fff;">
+          <img src = "static/Admin/dist/img/userpic.png" class = "img-fluid" style = "width:80px">
+        </div>
+        <div class="user-info">
+          <span class="user-name"> <strong>Shreyash Kamble</strong></span>
+          <span class="user-role" style = "color:#5eff5a;">Photographer</span>
+        </div>
+      </div>
+      <!-- sidebar-header -->
+     
+      <div class="sidebar-menu">
+        <ul>
+          <li class="sidebar">
+            <a href="home1.html"><i class="fa fa-home"></i><span>Home</span></a>
+          </li>
+          <li class="sidebar">
+            <a href="{% url 'admin_dashboard' %}"><i class="fa fa-tachometer-alt"></i><span>Dashboard</span></a>
+          </li>
+        </ul>
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+   <div class="sidebar-footer">
+      <ul>
+          <li class="sidebar">
+            <a href="#"><i class="fa fa-cog"></i><span>Account Setting</span></a>
+          </li>
+		  <li class="sidebar">
+            <a href="{% url 'admin_index' %}"><i class="fa fa-sign-out-alt"></i><span>Logout</span></a>
+          </li>
+        </ul>
+    </div>
+    <!-- sidebar-footer  -->
+  </nav>
+  <!-- sidebar-wrapper  -->
+    
+  <main class="page-content">
+    <div class="container-fluid">
+      <div class = "card shadow mb-3">
+		<div class = "card-body">
+			<div class = "row">
+				<div class = "col-md-3 col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+						  <span class="input-group-text"><i class = "fa fa-search"></i></span>
+						</div>
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+				</div>
+				<!--/.col-->
+				<div class = "col-md-9 col-12 text-right">
+					<button class = "btn btn-primary btn-sm" type = "button" type = "button"  data-toggle="modal" data-target="#myModal"><i class = "fa fa-user-plus mr-2"></i> Add New Client</button>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	  </div>
+	  <!--/.card-->
+	  
+	  <div class = "card shadow" style = "height:calc(100vh - 140px)">
+		<div class = "card-body">
+			<div class = "row">
+				<div class = "col-md-3">
+					<div class = "card user-card">
+						<div class = "card-body p-0">
+							<img src = "static/Admin/dist/img/Group 254.png" class = "img-fluid card-img-top">
+							<div class="card-img-overlay overlay1 text-center">
+							  <p class="card-text text-white font-weight-bold mb-0 mt-auto">Raj Mane</p>
+							  <small class="card-text text-white">raj@gmail.com</small>
+							</div>
+							<div class="card-img-overlay overlay2">
+							  <div class = "row">
+								<div class = "col-7">
+									<p class="card-text text-white font-weight-bold mb-0 mt-auto">Raj Mane</p>
+									<small class="card-text text-white">raj@gmail.com</small>
+								</div>
+								<!--/.col-->
+								<div class = "col-5 d-flex">
+									<img src = "static/Admin/dist/img/View.png" class = "img-fluid mr-1" title = "View" style = "width : 30px;height:30px;">
+									<img src = "static/Admin/dist/img/Edit.png" class = "img-fluid mr-1" title = "Edit" style = "width : 30px;height:30px;">
+									<img src = "static/Admin/dist/img/Delete.png" class = "img-fluid"  title = "Delete" style = "width : 30px;height:30px;">
+								</div>
+								<!--/.col-->
+							  </div>
+							  <!--/.row-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+				<div class = "col-md-3">
+					<div class = "card user-card">
+						<div class = "card-body p-0">
+							<img src = "static/Admin/dist/img/Group 255.png" class = "img-fluid card-img-top">
+							<div class="card-img-overlay overlay1 text-center">
+							  <p class="card-text text-white font-weight-bold mb-0 mt-auto">Ashish Katkar</p>
+							  <small class="card-text text-white">ashish@gmail.com</small>
+							</div>
+							<div class="card-img-overlay overlay2">
+							  <div class = "row">
+								<div class = "col-7">
+									<p class="card-text text-white font-weight-bold mb-0 mt-auto">Ashish Katkar</p>
+									<small class="card-text text-white">ashish@gmail.com</small>
+								</div>
+								<!--/.col-->
+								<div class = "col-5 d-flex">
+									<img src = "static/Admin/dist/img/View.png" class = "img-fluid mr-1" title = "View" style = "width : 30px;height:30px;">
+									<img src = "static/Admin/dist/img/Edit.png" class = "img-fluid mr-1" title = "Edit" style = "width : 30px;height:30px;">
+									<img src = "static/Admin/dist/img/Delete.png" class = "img-fluid"  title = "Delete" style = "width : 30px;height:30px;">
+								</div>
+								<!--/.col-->
+							  </div>
+							  <!--/.row-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+			
+			<div class = "col-12">
+				<button class = "btn btn-primary btn-lg add" type = "button"  data-toggle="modal" data-target="#myModal"><i class = "fa fa-plus"></i></button>
+			</div>
+			<!--/.col-->
+			
+		</div>
+	  </div>
+	  <!--/.card-->
+	  
+	  
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+			  <div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+
+				  <!-- Modal Header -->
+				  <div class="modal-header">
+					<h5 class="modal-title font-weight-bold" style = "color:#537fe7">Add New Client</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				  </div>
+
+				  <!-- Modal body -->
+				  <div class="modal-body">
+					<div class = "col-12 mb-3">
+						<label>Client Name</label>
+						<input type = "text" class = "form-control" placeholder = "Enter Full Name">
+					</div>
+					<!--/.col-->
+					<div class = "col-12 mb-3">
+						<label>Organization</label>
+						<input type = "text" class = "form-control" placeholder = "Enter Organization Name(Optional)">
+					</div>
+					<!--/.col-->
+					<div class = "col-12 mb-3">
+						<label>Email</label>
+						<input type = "email" class = "form-control" placeholder = "Enter Email ID">
+					</div>
+					<!--/.col-->
+					<div class = "col-12 mb-3">
+						<label>Phone</label>
+						<input type = "email" class = "form-control" placeholder = "Enter Phone">
+					</div>
+					<!--/.col-->
+					<div class = "col-12 text-center">
+						<button type="button" class="btn btn-primary btn-sm">Add Client</button>
+						<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+					</div>
+					<!--/.col-->
+				  </div>
+				</div>
+			  </div>
+			</div>
+    </div>
+  </main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper" -->
+</body>
+</html>

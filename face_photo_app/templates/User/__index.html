@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Face Recognization</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/User/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/User/dist/css/style.css">
+  <link rel="stylesheet" href="static/User/dist/fontawesome/css/all.min.css">
+  <script src="static/User/dist/js/jquery.slim.min.js"></script>
+  <script src="static/User/dist/js/popper.min.js"></script>
+  <script src="static/User/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  
+<div class="container-fluid bg h-100 p-0">
+  <div class="row h-100 justify-content-center align-items-center mx-0">
+    <div class="col-4">
+      <div class = "card">
+		<div class = "card-body">
+			<h2 class = "text-primary font-weight-bold  text-center mb-4">Access your Images</h2>
+			<div class = "row px-5">
+				<div class = "col-md-6 col-12 mb-3">
+					<label>First Name</label>
+					<input type = "text" class = "form-control" placeholder = "First Name">
+				</div>
+				<!--/.col-->
+				<div class = "col-md-6 col-12 mb-3">
+					<label>Last Name</label>
+					<input type = "text" class = "form-control" placeholder = "Last Name">
+				</div>
+				<!--/.col-->
+				<div class = "col-12 mb-3">
+					<label>Phone Number</label>
+					<input type = "text" class = "form-control" placeholder = "Phone Number">
+				</div>
+				<!--/.col-->
+				<div class = "col-12 mb-3">
+					<a href = "{% url 'user_otp' %}"><button class = "btn btn-primary w-100">Proceed</button></a>
+				</div>
+				<!--/.col-->
+				<div class = "col-12 mb-3">
+					<small><span class = "text-primary">Note:</span> Providing your name and contact number ensures that only authorized individuals access the images, helps prevent misuse, and allows us to assist you more effectively if there are any issues.</small>
+				</div>
+				<!--/.col-->
+			</div>	
+			<!--/.row-->
+		</div>
+	  </div>
+    </div>   
+  </div>
+</div>
+</body>
+</html>
