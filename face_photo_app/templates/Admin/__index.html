@@ -21,15 +21,28 @@
 				<h4 class = "title font-weight-bold mb-0">Log In</h4>
 			</div>
 			<!--/.col-->
-			<form>	
+			<form method="post" action="{% url 'admin_index' %}">	
+				{% csrf_token %}
+				{% if success_message %}
+                        <div class="alert alert-success" role="alert">
+                             {{ success_message }}
+                        </div>
+                    {% endif %}
+                    {% if messages %}
+                        {% for message in messages %}
+                             <div class="alert alert-primary" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 				<div class = "col-12 mb-3">
-					<label>Email</label>
-					<input type = "text" class = "form-control" placeholder = "Enter Email Address">
+					<label>Phone</label>
+					<input type = "text" name="phone" class = "form-control" placeholder = "Enter Phone" required>
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">
 					<label>Password</label>
-					<input type = "password" class = "form-control" placeholder = "Enter Password">
+					<input type = "password" name="password" class = "form-control" placeholder = "Enter Password" required>
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">										
@@ -41,7 +54,7 @@
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">
-					<a href = "{% url 'admin_home' %}"><button class = "btn btn-primary btn-sm shadow w-100" type = "button">Log In</button></a>
+					<button class = "btn btn-primary btn-sm shadow w-100" type="submit">Log In</button>
 				</div>
 				<!--/.col-->
 				

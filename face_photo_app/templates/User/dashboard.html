@@ -1,98 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Face Recognization</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="static/User/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="static/User/dist/css/style.css">
-  <link rel="stylesheet" href="static/User/dist/fontawesome/css/all.min.css">
-  <script src="static/User/dist/js/jquery.slim.min.js"></script>
-  <script src="static/User/dist/js/popper.min.js"></script>
-  <script src="static/User/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-  
-<div class="container-fluid bg h-100 p-0">
-  <div class="col-12 mb-3 pt-3">
-	<div class = "row mb-3">
-		<div class = "col-md-6 col-12">
-			<h3 class = "text-primary font-weight-bold mb-1">Sangeet Ceremony</h3>
-			<small>Event Organizer : Mr. Raj Mane</small>
-		</div>
-		<!--/.col-->
-		<div class = "col-md-6 col-12 text-right my-auto">
-			<small>Photographer : Shreyash Kamble</small>
-		</div>
-		<!--/.col-->
-	</div>
-	<!--/.row-->
-	
-	<div class = "card">
-		<div class = "card-body py-2">
-			<div class = "row">
-				<div class = "col-md-6 col-12">
-					<small>Showing Result For :</small>
-					<img src = "static/User/dist/img/Mark 0.png" class = "img-fluid ml-2" style = "width:50px;">
-				</div>
-				<!--/.col-->
-				<div class = "col-md-6 col-12 text-right my-auto">
-					<button class = "btn btn-primary btn-sm" type = "button" disabled><i class = "fa fa-filter"></i></button>
-					<button class = "btn btn-primary btn-sm" type = "button"><i class = "fa fa-th-large"></i></button>
-				</div>
-				<!--/.col-->
-			</div>
-			<!--/.row-->
-		</div>
-	</div>
-  </div>
-  <div class="col-12">
-      <div class = "card">
-		<div class = "card-body">
-			<div class="row">
-              <div class="col-md-3 col-12">
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
+  <head>
+    <title>Face Recognization</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="static/User/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/User/dist/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="static/User/dist/fontawesome/css/all.min.css"
+    />
+    <script src="static/User/dist/js/jquery.slim.min.js"></script>
+    <script src="static/User/dist/js/popper.min.js"></script>
+    <script src="static/User/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
 
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-              </div>
-              
-              <div class="col-md-3 col-12 pt-5 mt-5">
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-              </div>
-              
-              <div class="col-md-3 col-12">
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-              </div>
-              
-              <div class="col-md-3 col-12 pt-5 mt-5">
-				<img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-
-                  <img src="static/User/dist/img/Mark 1.png" class="img-fluid mb-2">
-                  
-                  <img src="static/User/dist/img/Mark 2.png" class="img-fluid mb-2">
-              </div>
+    <div class="container-fluid bg4 h-100 p-0">
+      <div class="col-12 mb-3 pt-3">
+        <div class="row mb-3">
+          <div class="col-md-6 col-12">
+            <h3 class="text-primary font-weight-bold mb-1">{{ event_name }}
+              Ceremony</h3>
+            <small>Event Organizer : {{ Customer_full_name }}</small>
           </div>
-		</div>
-	  </div>
+          <!--/.col-->
+          <div class="col-md-6 col-12 text-right my-auto">
+            <small>Photographer : {{ username }}</small>
+          </div>
+          <!--/.col-->
+        </div>
+        <!--/.row-->
+
+        <div class="card">
+          <div class="card-body py-2">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <small>Showing Results :</small>
+                {% comment %} <img src="dist/img/Mark 0.png" class="img-fluid ml-2"
+                  style="width:50px;"> {% endcomment %}
+              </div>
+              <!--/.col-->
+              {% comment %} <div class="col-md-6 col-12 text-right my-auto">
+                <button class="btn btn-primary btn-sm" type="button" disabled><i
+                    class="fa fa-filter"></i></button>
+                <button class="btn btn-primary btn-sm" type="button"><i
+                    class="fa fa-th-large"></i></button>
+              </div> {% endcomment %}
+              <!--/.col-->
+            </div>
+            <!--/.row-->
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+
+              <div id="imageRow">
+                {% for labels, path in matched_images_path.items %}
+                {% if forloop.counter0|divisibleby:4 %}
+                <div class="row">
+                  {% endif %}
+                  <div class="col-md-3">
+                    <div class="card">
+                      <div class="card-body text-center">
+                        <img src="{{ path }}" class="img-fluid"
+                          alt="Uploaded Image">
+                      </div>
+                    </div>
+                  </div>
+                  {% if forloop.counter|divisibleby:4 or forloop.last %}
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>
+

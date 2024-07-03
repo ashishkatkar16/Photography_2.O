@@ -13,39 +13,51 @@
 </head>
 <body>
   
-<div class="container-fluid bg h-100 p-0">
+<div class="container-fluid bg1 h-100 p-0">
   <div class="row h-100 justify-content-center align-items-center mx-0">
-    <div class="col-4">
+    <div class="col-4 ml-auto mr-5">
       <div class = "card">
-		<div class = "card-body">
+		<div class = "card-body py-5">
+			{% if error %}
+			<div class="alert alert-danger" role="alert">
+				{{error}}
+			</div>
+			{% endif %}
+			<form method="post" action="{% url 'user_index' %}">
+				{% csrf_token %}
 			<h2 class = "text-primary font-weight-bold  text-center mb-4">Access your Images</h2>
 			<div class = "row px-5">
+				<input type="hidden" name="event" value="{{ event_name }}">
+    			<input type="hidden" name="customer_id" value="{{ customer_id }}">
+    			<input type="hidden" name="Customer_full_name" value="{{ Customer_full_name }}">
 				<div class = "col-md-6 col-12 mb-3">
 					<label>First Name</label>
-					<input type = "text" class = "form-control" placeholder = "First Name">
+					<input type = "text" name="fname" class = "form-control" value="{{ values.fname }}" placeholder = "First Name" required>
 				</div>
 				<!--/.col-->
 				<div class = "col-md-6 col-12 mb-3">
 					<label>Last Name</label>
-					<input type = "text" class = "form-control" placeholder = "Last Name">
+					<input type = "text" name="lname" class = "form-control" value="{{ values.lname }}" placeholder = "Last Name" required>
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">
 					<label>Phone Number</label>
-					<input type = "text" class = "form-control" placeholder = "Phone Number">
+					<input type = "text" name="phone" class = "form-control" value="{{ values.phone }}" placeholder = "Please Enter a Valid Number!" required>
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">
-					<a href = "{% url 'user_otp' %}"><button class = "btn btn-primary w-100">Proceed</button></a>
+					<button class="btn btn-primary w-100" type="submit">Proceed</button>
 				</div>
 				<!--/.col-->
 				<div class = "col-12 mb-3">
 					<small><span class = "text-primary">Note:</span> Providing your name and contact number ensures that only authorized individuals access the images, helps prevent misuse, and allows us to assist you more effectively if there are any issues.</small>
 				</div>
+			</form>
 				<!--/.col-->
 			</div>	
 			<!--/.row-->
 		</div>
+
 	  </div>
     </div>   
   </div>

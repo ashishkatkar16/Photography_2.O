@@ -1,12 +1,53 @@
 body, html {
   height: 100%;
 }
-.bg{
-	background : url("../../dist/img/Enter PIN.png");
-	background-size: cover;
-	background-position:center;
-	background-repeat:no-repeat;
-	height: 100%; 
+.bg1{
+  background : url("../../dist/img/User Information.png");
+  background-size: cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  height: 100%; 
+}
+.bg1 .card{
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius : 15px;
+  background: #FFFFFF99;
+}
+.bg2{
+  background : url("../../dist/img/Enter PIN 1.png");
+  background-size: cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  height: 100%; 
+}
+.bg2 .card{
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius : 15px;
+  background: #FFFFFF99;
+}
+.bg3{
+  background : url("../../dist/img/Upload Selfie.png");
+  background-size: cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  height: 100%; 
+}
+.bg3 .card{
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius : 15px;
+  background: #FFFFFF99;
+}
+.bg4{
+  background : url("../../dist/img/Result.png");
+  background-size: cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  height: 100%; 
+}
+.bg4 .card{
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius : 15px;
+  background: #FFFFFF99;
 }
 .uploadFile {
   width: 30%;
@@ -35,6 +76,6 @@ body, html {
     top: 0px;
     z-index: 1;
   }
-   .flex-column {
+    .flex-column {
             max-width: 260px;
         }

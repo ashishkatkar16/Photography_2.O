@@ -568,7 +568,7 @@ body {
   border-left-color: transparent;
 }
 .card-img-overlay{
-	top: 140px;
+	top: 180px;
 }
 .overlay2{
 	visibility:hidden;
@@ -660,14 +660,51 @@ body {
     z-index: 1;
   }
 .share{
-	width: 40px;
+  width: 40px;
   position: absolute;
   right: 60px;
   top: 10px;
 }
+.view{
+  width: 40px;
+  position: absolute;
+  right: 110px;
+  top: 10px;
+}
+
 .delete{
-	width: 40px;
+  width: 40px;
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+.share .dropdown-menu{
+	top: 156px;
+  left: -306px!important;
+  width: 416px;
+  background: #585858;
+  border-radius : 10px;
+}
+.share .dropdown-menu .dropdown-item:focus, .share .dropdown-menu .dropdown-item:hover{
+	background : transparent;
+}
+.share .dropdown-menu .dropdown-item{
+	padding:0px;
+}
+
+.modal{
+	z-index : 9999;
+}
+
+.img-container {
+	width: 100%;
+	height: 255px; /* Adjust this height as needed */
+	overflow: hidden;
+}
+
+.img-container img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }

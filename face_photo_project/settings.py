@@ -73,8 +73,12 @@ WSGI_APPLICATION = "face_photo_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "photographydb",
+        "USER": 'root',
+        'PASSWORD': 'root',
+        'PORT': '3306',
+        'HOST': 'localhost'
     }
 }
 
@@ -112,6 +116,9 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIR = os.path.join(BASE_DIR, STATIC_URL)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

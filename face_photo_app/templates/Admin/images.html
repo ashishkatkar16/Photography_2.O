@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Face Recognition</title>
+		<meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet"
+         href="{% static 'Admin/dist/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'Admin/dist/css/style.css' %}">
+      <link rel="stylesheet"
+         href="{% static 'Admin/dist/fontawesome/css/all.min.css' %}">
+      <script src="{% static 'Admin/dist/js/jquery.slim.min.js' %}"></script>
+      <script src="{% static 'Admin/dist/js/popper.min.js' %}"></script>
+      <script
+         src="{% static 'Admin/dist/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'Admin/dist/js/custom.js' %}"></script>
+	</head>
+	<body>
+		<div class="page-wrapper chiller-theme toggled">
+			<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+				<i class="fas fa-bars"></i>
+			</a>
+			<!-- Button  -->
+			<nav id="sidebar" class="sidebar-wrapper">
+				<div class="sidebar-content">
+					<div class="sidebar-brand text-center">
+						<a href="#">Welcome Back</a>
+						<div id="close-sidebar"><i class="fa fa-times"></i></div>
+					</div>
+					<!-- sidebar-brand -->
+					<div class="sidebar-header text-center">
+						<div class="user-pic mb-3" style="color:#fff;">
+							<img src="{% static 'Admin/dist/img/userpic.png' %}" class="img-fluid"
+								style="width:80px">
+						</div>
+						<div class="user-info">
+							<span class="user-name"> <strong>{{ username }}</strong></span>
+							<span class="user-role" style="color:#5eff5a;">Photographer</span>
+						</div>
+					</div>
+					<!-- sidebar-header -->
+
+					<div class="sidebar-menu">
+						<ul>
+							<li class="sidebar">
+								<a href="{% url 'admin_home' %}"><i
+										class="fa fa-home"></i><span>Home</span></a>
+							</li>
+							<li class="sidebar">
+								<a href="{% url 'admin_dashboard' %}"><i
+										class="fa fa-tachometer-alt"></i><span>Dashboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<!-- sidebar-menu  -->
+				</div>
+				<!-- sidebar-content  -->
+				<div class="sidebar-footer">
+					<ul>
+						<li class="sidebar">
+							<a href="#"><i class="fa fa-cog"></i><span>Account Setting</span></a>
+						</li>
+						<li class="sidebar">
+							<a href="{% url 'logout' %}"><i
+									class="fa fa-sign-out-alt"></i><span>Logout</span></a>
+						</li>
+					</ul>
+				</div>
+				<!-- sidebar-footer  -->
+			</nav>
+
+			<!-- sidebar-wrapper  -->
+			
+			<main class="page-content">
+				<div class="container-fluid">
+					<div class="card shadow mb-3">
+						
+						<div class="card-body">
+							<div class="row">
+								
+								<div class="col-md-3 col-12">
+									<a href="{% url 'admin_home1' customer_id %}"><button
+										  class="btn btn-primary btn-sm" type="button"><i
+											 class="fa fa-angle-left mr-1"></i>Back</button></a>
+								 </div>
+								 
+								 <div class="col-md-9 col-12 text-right">
+									<form method="post" action="{% url 'admin_home1' customer_id=customer_id %}">
+										{% csrf_token %}
+										<input type="hidden" name="event" value="{{ event }}">
+										<button type="submit" name="share-btn" style="border:none; background:none;"><img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></button>
+									</form>
+									{% comment %} <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a> {% endcomment %}
+								 </div>
+
+								</div>
+								
+								<!--/.col-->
+							</div>
+							<!--/.row-->
+						</div>
+					
+					</div>
+					<!--/.card-->
+					
+					<div class="card shadow" style="height:calc(100vh - 140px)">
+						<div class="card-body">
+							<div class="row">
+							<h2>{{ event.name }} - {{ event.description }}</h2>
+
+							<div class="row event-images">
+								{% for image in images %}
+								<div class="col-md-4">
+									<img src="{{ image.image.url }}" alt="{{ image.image.name }}"
+										 class="img-thumbnail"/>
+								</div>
+								{% endfor %}
+							</div>
+							</div>
+							<!--/.row-->
+
+		
+							<!--/.col-->
+
+						</div>
+					</div>
+					<!--/.card-->
+			
+				
+				</div>
+			</main>
+			<!-- page-content" -->
+
+<div class="container">
+    
+</div>
+
+		</div>
+		<!-- page-wrapper" -->
+	</body>
+</html>

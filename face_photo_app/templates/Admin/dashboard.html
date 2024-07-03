@@ -37,7 +37,7 @@
       <div class="sidebar-menu">
         <ul>
           <li class="sidebar">
-            <a href="home1.html"><i class="fa fa-home"></i><span>Home</span></a>
+            <a href="{% url 'admin_home' %}"><i class="fa fa-home"></i><span>Home</span></a>
           </li>
           <li class="sidebar">
             <a href="{% url 'admin_dashboard' %}"><i class="fa fa-tachometer-alt"></i><span>Dashboard</span></a>
@@ -53,7 +53,7 @@
             <a href="#"><i class="fa fa-cog"></i><span>Account Setting</span></a>
           </li>
 		  <li class="sidebar">
-            <a href="{% url 'admin_index' %}"><i class="fa fa-sign-out-alt"></i><span>Logout</span></a>
+            <a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i><span>Logout</span></a>
           </li>
         </ul>
     </div>

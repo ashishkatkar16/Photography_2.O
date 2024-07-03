@@ -9,6 +9,7 @@
   <script src="static/Admin/dist/js/jquery.slim.min.js"></script>
   <script src="static/Admin/dist/js/popper.min.js"></script>
   <script src="static/Admin/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/Admin/dist/js/custom.js"></script>
 </head>
 <body>
   
@@ -21,52 +22,68 @@
 				<h4 class = "title font-weight-bold mb-0">Sign Up</h4>
 			</div>
 			<!--/.col-->
-			<form>	
+			<form method="post" action="{% url 'admin_signup' %}">
+				{% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                {% endif %}
+				{% csrf_token %}	
 				<div class = "row">
 					<div class = "col-md-6 col-12 mb-3">
 						<label>First Name</label>
-						<input type = "text" class = "form-control" placeholder = "Enter First Name">
+						<input type="text" name="fname" class="form-control" value="{{ values.fname }}" placeholder = "Enter First Name" required>
 					</div>
 					<div class = "col-md-6 col-12 mb-3">
 						<label>Last Name</label>
-						<input type = "text" class = "form-control" placeholder = "Enter Last Name">
+						<input type = "text" name="lname" class="form-control" value="{{ values.lname }}" placeholder = "Enter Last Name" required>
 					</div>
 					<!--/.col-->
 					<div class = "col-12 mb-3">
 						<label>Email</label>
-						<input type = "text" class = "form-control" placeholder = "Enter Email Address">
+						<input type="text" name="email" class="form-control" value="{{ values.email }}" placeholder = "Enter Email Address" required>
 					</div>
 					<!--/.col-->
 					<div class = "col-12 mb-3">
 						<label>Phone</label>
-						<input type = "text" class = "form-control" placeholder = "Enter Phone">
+						<input type = "text" name="phone" class="form-control" value="{{ values.phone }}" placeholder = "Enter Phone" required>
 					</div>
 					<!--/.col-->
-					<div class = "col-12 mb-3">										
+					<div class = "col-12 mb-2">										
 						<label class="switch">
-						  <input type="checkbox">
+						  <input type="checkbox" class="show">
 						  <span class="slider round"></span>
 						</label>
 						<small>I am Photographer</small>
 					</div>
 					<!--/.col-->
-					<div class = "col-12 mb-3">
+					<div class = "col-12 mb-3 org" style="display: none;">
+						<label>Organization</label>
+						<input type="text" name="organization" class="form-control" value="{{ values.organization }}" placeholder="Enter Organization">
+					</div>
+					<!--/.col-->
+					<div class = "col-md-6 col-12 mb-3">
+						<label>Username</label>
+						<input type="text" name="username" class = "form-control" value="{{ values.username }}" placeholder = "Enter Username">
+					</div>
+					<!--/.col-->
+					<div class = "col-md-6 col-12 mb-3">
 						<label>Password</label>
-						<input type = "password" class = "form-control" placeholder = "Enter Password">
+						<input type = "password" name="password" class = "form-control" placeholder = "Enter Password">
 					</div>
 					<!--/.col-->
 					<div class = "col-12 mb-3">
 						<label>Confirm Password</label>
-						<input type = "password" class = "form-control" placeholder = "Re-enter Password">
+						<input type = "password" name="repassword" class = "form-control" placeholder = "Re-enter Password">
 					</div>
 					<!--/.col-->
 					
 					<div class = "col-12 mb-3">
-						<button class = "btn btn-primary btn-sm shadow w-100" type = "button">Sign Up</button>
+						<button class="btn btn-primary btn-sm shadow w-100" type="submit">Sign Up</button>
 					</div>
 					<!--/.col-->
 					<div class = "col-12 text-center">
-						<small>If Already a Member?<a class = "font-weight-bold" href = "index.html"><u>Log In</u></a></small>
+						<small>If Already a Member? <a class = "font-weight-bold" href="{% url 'admin_index' %}"><u>Log In</u></a></small>
 					</div>
 					<!--/.col-->
 				</div>

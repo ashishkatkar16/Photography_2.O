@@ -13,53 +13,57 @@
 </head>
 <body>
   
-<div class="container-fluid bg h-100 p-0">
-  <div class="row h-100 justify-content-center align-items-center mx-0">
-    <div class="col-4">
-      <div class = "card">
-		<div class = "card-body text-center">
-			<h2 class = "text-primary font-weight-bold">Access your Images</h2>
-			<i class = "fa fa-lock fa-2x py-2"></i>
-			<p class = "text-primary font-weight-bold mb-0">Sangeet Ceremony</p>
-			<p class = "text-muted">Organized by : Raj Mane</p>
-			
-			<label>Enter 4-Digit PIN</label>
-			<div class="d-flex items-center justify-content-center mx-0">
-			  <input class="otp form-control mr-2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 style = "width:50px;">
-              <input class="otp form-control  mr-2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 style = "width:50px;">
-              <input class="otp form-control  mr-2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 style = "width:50px;">
-              <input class="otp form-control  mr-2" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 style = "width:50px;">
-            </div>
-			
-			<div class = "col-12 my-3">
-				<a href = "{% url 'user_selfie' %}"><button class = "btn btn-primary btn-sm w-75" type = "button">Access Images</button></a>
-			</div>
-			
-			<div class = "col-12 mt-3 text-left">
-				<small><span class = "text-primary">*Note:</span> If you don’t know your PIN, please contact the Event organizer:</small><br>
-				<small>Email: <a href = "mailto:Raj@gmail.com">Raj@gmail.com</a></small><br>
-				<small>Phone: <a href = "tel:+1 234 567 890">+1 234 567 890</a></small><br>
-			</div>
-			
-		</div>
-	  </div>
-    </div>   
+  
+  <div class="container-fluid bg2 h-100 p-0">
+    <div class="row h-100 justify-content-center align-items-center mx-0">
+      <div class="col-4  ml-auto mr-5">
+        <div class = "card">
+          <form method="post">
+            {% csrf_token %}
+      <div class = "card-body text-center py-5">
+        <h2 class = "text-primary font-weight-bold">Access your Images</h2>
+        <i class = "fa fa-lock fa-2x py-2"></i>
+        <p class = "text-primary font-weight-bold mb-0">Sangeet Ceremony</p>
+        <p class = "text-muted">Organized by : Raj Mane</p>
+        
+        <label>Enter 4-Digit PIN</label>
+        <div class="d-flex items-center justify-content-center mx-0">
+          <input class="otp form-control mr-2 shadow" name="otp1" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 style = "width:50px;">
+                <input class="otp form-control  mr-2 shadow" name="otp2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 style = "width:50px;">
+                <input class="otp form-control  mr-2 shadow" name="otp3" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 style = "width:50px;">
+                <input class="otp form-control  mr-2 shadow" name="otp4" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 style = "width:50px;">
+              </div>
+        
+        <div class = "col-12 my-3">
+          <button class = "btn btn-primary btn-sm w-75" type = "submit">Access Images</button>
+        </div>
+        
+        <div class = "col-12 mt-3 text-left">
+          <small><span class = "text-primary">*Note:</span> If you don’t know your PIN, please contact the Event organizer:</small><br>
+          <small><span class = "text-primary">Email:</span> <a href = "mailto:Raj@gmail.com" class = "text-dark">Raj@gmail.com</a></small><br>
+          <small><span class = "text-primary">Phone:</span> <a href = "tel:+1 234 567 890" class = "text-dark">+1 234 567 890</a></small><br>
+        </div>
+      </div>
+    </form>
+  
+      </div>
+      </div>   
+    </div>
   </div>
-</div>
-<script>
-let digitValidate = function(ele){
-  console.log(ele.value);
-  ele.value = ele.value.replace(/[^0-9]/g,'');
-}
-
-let tabChange = function(val){
-    let ele = document.querySelectorAll('input');
-    if(ele[val-1].value != ''){
-      ele[val].focus()
-    }else if(ele[val-1].value == ''){
-      ele[val-2].focus()
-    }   
- }
-</script>
-</body>
-</html>
+  <script>
+  let digitValidate = function(ele){
+    console.log(ele.value);
+    ele.value = ele.value.replace(/[^0-9]/g,'');
+  }
+  
+  let tabChange = function(val){
+      let ele = document.querySelectorAll('input');
+      if(ele[val-1].value != ''){
+        ele[val].focus()
+      }else if(ele[val-1].value == ''){
+        ele[val-2].focus()
+      }   
+   }
+  </script>
+  </body>
+  </html>
