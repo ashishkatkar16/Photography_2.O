@@ -395,7 +395,8 @@ def user_index(request):
                     'phone': phone,
                 }
             })
-            return render(request, 'User/__index.html', context=data)
+            return redirect(reverse('user_index') + f'?event={event_name}&customer_id={customer_id}&Customer_full_name={Customer_full_name}',context=data)
+            # return render(request, 'User/__index.html', context=data)
     
     return render(request, "User/__index.html", context=data)
 

@@ -168,11 +168,15 @@
                                  <a href="{% url 'user_images' event.id %}"><img src="{% static 'Admin/dist/img/View.png' %}" class="img-fluid view"></a>
                                  <div class="dropdown share"
                                     style="z-index: 9999;">
-                                    <button type="button"
-                                       class="btn btn-default p-0"
-                                       data-toggle="dropdown">
+                                    <form method="post" action="{% url 'admin_home1' customer_id=customer_id %}">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="event" value="{{ event }}">
+                                    <button type="submit"
+                                       name="share-btn"
+                                       class="btn btn-default p-0">
                                        <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a>
                                     </button>
+                                    </form>
 
                                     <div class="dropdown-menu dropdown-menu-lg">
                                        <div class="row mx-0">
@@ -207,16 +211,18 @@
                                                    class="img-fluid">
                                              </a>
                                           </div>
-                                          <!--/.col-->
+
+                                          {% comment %} <!--/.col-->
                                           <div class="col">
                                              <a class="dropdown-item" href="#">
                                                 <img
                                                    src="{% static 'Admin/dist/img/Telegram.png' %}"
                                                    class="img-fluid">
                                              </a>
-                                          </div>
+                                          </div> {% endcomment %}
                                           <!--/.col-->
                                        </div>
+                                       
                                        <!--/.row-->
                                     </div>
                                  </div>
