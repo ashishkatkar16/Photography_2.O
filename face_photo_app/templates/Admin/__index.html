@@ -44,20 +44,20 @@
 					<label>Password</label>
 					<input type = "password" name="password" class = "form-control" placeholder = "Enter Password" required>
 				</div>
-				<!--/.col-->
+				{% comment %} <!--/.col-->
 				<div class = "col-12 mb-3">										
 					<label class="switch">
-					  <input type="checkbox">
+					  <input type="checkbox" name="remember_me">
 					  <span class="slider round"></span>
 					</label>
 					<small>Remember Me</small>
-				</div>
+				</div> {% endcomment %}
 				<!--/.col-->
 				<div class = "col-12 mb-3">
 					<button class = "btn btn-primary btn-sm shadow w-100" type="submit">Log In</button>
 				</div>
-				<!--/.col-->
-				
+
+				{% comment %} <!--/.col-->
 				<div class = "col-12 text-center mb-3">
 					<small>Or Log In with</small>
 				</div>
@@ -67,7 +67,7 @@
 					<button class = "btn btn-light w-50 mr-2" type = "button"><img src = "static/Admin/dist//img/gmail.png" class = "img-fluid"></button>
 					<button class = "btn btn-light w-50" type = "button"><img src = "static/Admin/dist//img/fb.png" class = "img-fluid"></button>
 				</div>
-				<!--/.col-->
+				<!--/.col--> {% endcomment %}
 				
 				<div class = "col-12 text-center">
 					<small>Don’t Have an account? <a class = "font-weight-bold" href = "{% url 'admin_signup' %}"><u>Sign Up</u></a></small>

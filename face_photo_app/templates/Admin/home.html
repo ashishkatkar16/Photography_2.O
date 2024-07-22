@@ -73,13 +73,16 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-3 col-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-search"></i></span>
+									<form method="GET" action="{% url 'admin_home' %}">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-search"></i></span>
+											</div>
+											<input type="text" class="form-control" name="search" placeholder="Search" value="{{ search_query }}">
 										</div>
-										<input type="text" class="form-control" placeholder="Search">
-									</div>
+									</form>
 								</div>
+
 								<!--/.col-->
 								<div class="col-md-9 col-12 text-right">
 									<button class="btn btn-primary btn-sm" type="button" type="button"

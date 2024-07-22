@@ -24,7 +24,7 @@ SECRET_KEY = "django-insecure-06n#d9u4ze27k8c$b&$66^j+gbnibl(rxvg)4(o3c+i^ek)ek6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "face_photo_app"
+    "face_photo_app",
 ]
 
 MIDDLEWARE = [
@@ -116,6 +116,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIR = os.path.join(BASE_DIR, STATIC_URL)
+
+STATIC_ROOT = 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

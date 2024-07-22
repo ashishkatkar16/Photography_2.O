@@ -3,9 +3,13 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.static import serve
+from django.urls import re_path
+
 
 urlpatterns = [
     # ------------------------ ADMIN URLS ------------------------
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path("", views.admin_index, name='admin_index'),
     path("admin_home", views.admin_home, name='admin_home'),
     path("admin_home1/<int:customer_id>/", views.admin_home1, name='admin_home1'),
@@ -28,7 +32,11 @@ urlpatterns = [
     # deleting user
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
     # deleting events
-    path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'), 
+    path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),
+    # 404 page
+    path('404', views.error_404, name='error_404'),
+    # loader
+    path('loader', views.loader_page, name='loader_page')
 ]
 
 if settings.DEBUG:

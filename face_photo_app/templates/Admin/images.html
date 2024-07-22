@@ -9,16 +9,17 @@
       <link rel="stylesheet"
          href="{% static 'Admin/dist/css/bootstrap.min.css' %}">
       <link rel="stylesheet" href="{% static 'Admin/dist/css/style.css' %}">
-      <link rel="stylesheet"
-         href="{% static 'Admin/dist/fontawesome/css/all.min.css' %}">
+      <link rel="stylesheet" href="{% static 'Admin/dist/fontawesome/css/all.min.css' %}">
+	  <link rel="stylesheet" href="{% static 'Admin/dist/css/loader.css' %}">
       <script src="{% static 'Admin/dist/js/jquery.slim.min.js' %}"></script>
       <script src="{% static 'Admin/dist/js/popper.min.js' %}"></script>
-      <script
-         src="{% static 'Admin/dist/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'Admin/dist/js/bootstrap.bundle.min.js' %}"></script>
       <script src="{% static 'Admin/dist/js/custom.js' %}"></script>
 	</head>
 	<body>
-		<div class="page-wrapper chiller-theme toggled">
+		<div class="loader">LOADING...</div>
+
+		<div class="page-wrapper chiller-theme toggled"> 
 			<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
 				<i class="fas fa-bars"></i>
 			</a>
@@ -87,11 +88,59 @@
 								 </div>
 								 
 								 <div class="col-md-9 col-12 text-right">
-									<form method="post" action="{% url 'admin_home1' customer_id=customer_id %}">
+
+									{% comment %} <form method="post" action="{% url 'admin_home1' customer_id=customer_id %}">
 										{% csrf_token %}
 										<input type="hidden" name="event" value="{{ event }}">
 										<button type="submit" name="share-btn" style="border:none; background:none;"><img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></button>
-									</form>
+									</form> {% endcomment %}
+
+									<div class="dropdown"
+                                    style="z-index: 9999;">
+                                    <button type="button"
+                                       class="btn btn-default p-0"
+                                       data-toggle="dropdown">
+                                       <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a>
+                                    </button>
+
+                                    
+                                    <div class="dropdown-menu dropdown-menu-lg">
+                                       <div class="row mx-0">
+                                          <div class="col">
+                                             <a class="dropdown-item" href="">
+                                                <button onclick="copyToClipboard('{{ shareable_link }}')" style="border:none; background:none;">
+                                                <img src="{% static 'Admin/dist/img/Copy Link.png' %}" class="img-fluid"></a></button>
+                                          </div>
+
+                                          <!--/.col-->
+                                          <div class="col">
+                                             <a class="dropdown-item" href="https://wa.me/?text={{ shareable_link|urlencode }}" data-action="share/whatsapp/share" target="_blank">
+                                                   <img src="{% static 'Admin/dist/img/Whatsapp.png' %}" class="img-fluid"></a>
+                                          </div>
+
+                                          
+                                          <!--/.col-->
+                                          <div class="col">
+                                             <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ shareable_link|urlencode }}" target="_blank">
+                                                <img
+                                                   src="{% static 'Admin/dist/img/Fb1.png' %}"
+                                                   class="img-fluid">
+                                             </a>
+                                          </div>
+                                          <!--/.col-->
+                                          <div class="col">
+                                             <a class="dropdown-item" href="mailto:?subject=Check%20out%20this%20link&body={{ shareable_link|urlencode }}">
+                                                <img
+                                                   src="{% static 'Admin/dist/img/Mail.png' %}"
+                                                   class="img-fluid">
+                                             </a>
+                                          </div>
+                                       </div>
+                                       
+                                       <!--/.row-->
+                                    </div>
+
+
 									{% comment %} <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a> {% endcomment %}
 								 </div>
 
@@ -108,13 +157,14 @@
 					<div class="card shadow" style="height:calc(100vh - 140px)">
 						<div class="card-body">
 							<div class="row">
-							<h2>{{ event.name }} - {{ event.description }}</h2>
 
 							<div class="row event-images">
 								{% for image in images %}
-								<div class="col-md-4">
+								
+								<div class="col-md-4 mb-5">
 									<img src="{{ image.image.url }}" alt="{{ image.image.name }}"
 										 class="img-thumbnail"/>
+										 
 								</div>
 								{% endfor %}
 							</div>
@@ -139,5 +189,21 @@
 
 		</div>
 		<!-- page-wrapper" -->
+		<script>
+			function copyToClipboard(text) {
+				var input = document.createElement('textarea');
+				input.innerHTML = text;
+				document.body.appendChild(input);
+				input.select();
+				var result = document.execCommand('copy');
+				document.body.removeChild(input);
+				alert('Link copied to clipboard!');
+			}
+
+			// JavaScript to control loader visibility
+			document.addEventListener('DOMContentLoaded', function () {
+				document.querySelector('.loader').classList.add('hidden');
+			});
+		</script>      
 	</body>
 </html>

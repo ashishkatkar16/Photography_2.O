@@ -16,6 +16,8 @@ import pickle
 import numpy as np
 import cv2
 import face_recognition
+from urllib.parse import urlencode
+
 
 
 def contains_vowel(string):
@@ -54,6 +56,12 @@ def admin_home(request):
         # User is not logged in
         return redirect('admin_index')
 
+    search_query = request.GET.get('search', '')
+    if search_query:
+        customer_data = AddNewCustomer.objects.filter(Customer_full_name__icontains=search_query,  admin=user)
+    else:
+        customer_data = AddNewCustomer.objects.filter(admin=user)
+
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
         organization = request.POST.get('add_customer_organization')
@@ -66,11 +74,18 @@ def admin_home(request):
             Organization_name=organization,
             Customer_email=email,
             Customer_mobile=phone,
+            admin=user  # Associate the customer with the logged-in user
         )
 
         return redirect('admin_home')
 
-    return render(request, "Admin/home.html", context={'customer_data': AddNewCustomer.objects.all(), 'username': username})
+    context = {
+        'customer_data': customer_data,
+        'username': username,
+        'search_query': search_query
+    }
+    
+    return render(request, "Admin/home.html", context=context)
 
 def admin_index(request):
 
@@ -79,19 +94,19 @@ def admin_index(request):
     if request.method == 'POST':
         phone = request.POST.get('phone')
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
 
         try:
             # Fetch the user by phone number
             user = CustomUser.objects.get(phone=phone)
-            username = user.username
-
-            user = CustomUser.objects.get(username=username)
-            print(user)
-            stored_password = user.password
-
-            if stored_password == password:
-                # Authentication successful
+            if user.password == password:
+            # Authentication successful
                 request.session['user_id'] = user.id
+
+                if remember_me:
+                    # Set session expiry to a longer duration (30 days)
+                    request.session.set_expiry(2592000)
+
                 return redirect('admin_home')
             else:
                 # Invalid password
@@ -122,20 +137,21 @@ def admin_home1(request, customer_id):
     
     customer = AddNewCustomer.objects.get(pk=customer_id)
     Customer_full_name = customer.Customer_full_name
-
+    
     if request.method == 'POST':
         if 'share-btn' in request.POST:
             # If the "Share" button is clicked
             event_name = request.POST.get('event')
             print('name', event_name)
             # Redirect to the OTP page with the event name as a query parameter
-            return redirect(reverse('user_index') + f'?event={event_name}&customer_id={customer_id}&Customer_full_name={Customer_full_name}')
+            return redirect(reverse('user_index') + f'?event={event_name}&customer_id={customer_id}&username={username}&Customer_full_name={Customer_full_name}')
         else:
             # If the form is submitted
             event_name = request.POST.get('eventName')
             event_date = request.POST.get('eventDate')
             event_description = request.POST.get('eventDescription')
             event_images = request.FILES.getlist('eventImages')
+            background_images = request.FILES.getlist('Bg_Image')
 
             # Get the customer object
             try:
@@ -176,13 +192,27 @@ def admin_home1(request, customer_id):
             return redirect(reverse('user_images', kwargs={'event_id': event.id}))
 
     else:
-        # Fetch existing events and group them by name
-        existing_events = Event.objects.filter(customer_id=customer_id).order_by('name')
+        search_query = request.GET.get('search', '')
+        selected_category = request.GET.get('category', '')
+
+        if selected_category:
+            existing_events = Event.objects.filter(customer_id=customer_id, name__icontains=selected_category, admin=user).order_by('name')
+
+        elif search_query:
+            existing_events = Event.objects.filter(customer_id=customer_id, name__icontains=search_query, admin=user).order_by('name')
+        
+        else:
+            existing_events = Event.objects.filter(customer_id=customer_id, admin=user).order_by('name')
+        
         grouped_events = {key: list(group) for key, group in groupby(existing_events, lambda x: x.name)}
 
         customer_names = AddNewCustomer.objects.filter(id=customer_id).values_list('Customer_full_name', flat=True)
+
+        all_event_names = Event.objects.filter(customer_id=customer_id).values_list('name', flat=True).distinct()
+
     
-        return render(request, 'Admin/home1.html', {'grouped_events': grouped_events, 'username': username, 'customer_id': customer_id, 'customer_names': customer_names})
+        return render(request, 'Admin/home1.html', {'grouped_events': grouped_events, 'username': username, 'customer_id': customer_id, 'customer_names': customer_names, 'selected_category': selected_category,'all_event_names': all_event_names})
+
 
 def user_images(request, event_id):
 
@@ -199,7 +229,22 @@ def user_images(request, event_id):
     images = event.images.all()
     customer_id = event.customer_id
 
-    return render(request, 'Admin/images.html',  {'event': event, 'images': images, 'username': username, 'customer_id': customer_id})
+    event_name = event.name
+    customer = AddNewCustomer.objects.get(pk=customer_id)
+    Customer_full_name = customer.Customer_full_name
+
+    query_params = urlencode({
+        'customer_id': customer_id,
+        'username':username,
+        'event': event_name,
+        'Customer_full_name': Customer_full_name,
+    })
+
+    shareable_link = request.build_absolute_uri(f"{reverse('user_index')}?{query_params}")
+    print(shareable_link)
+
+    return render(request, 'Admin/images.html',  {'event': event, 'images': images, 'username': username, 'customer_id': customer_id, 'shareable_link':shareable_link})
+
 
 def admin_signup(request):
 
@@ -298,30 +343,30 @@ def delete_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     
     # Construct the path to the event folder
-    event_folder = os.path.join(settings.MEDIA_ROOT, str(event.admin), str(event.customer), str(event.name))
+    event_folder = os.path.join(settings.MEDIA_ROOT, str(event.admin.username), str(event.customer), str(event.name))
+    print(f"Deleting folder: {event_folder}")
     
-    # Check if the event folder exists
+    # Check if the event folder exists and attempt to delete it
     if os.path.exists(event_folder):
-        # Delete the event folder and all its contents from Django media storage
         try:
             shutil.rmtree(event_folder)
         except Exception as e:
-            # Handle any exceptions or errors
-            pass
+            messages.error(request, f'Failed to delete event folder: {str(e)}')
     
-    # Check if the event folder exists in the local filesystem
-    if os.path.exists(event_folder):
-        # Delete the event folder and all its contents from the local filesystem
-        try:
-            shutil.rmtree(event_folder)
-        except Exception as e:
-            # Handle any exceptions or errors
-            pass
-
     # Delete the event from the database
     event.delete()
-    
+    messages.success(request, 'Event deleted successfully.')
+
     return redirect('admin_home1', customer_id=event.customer.id)
+
+
+def error_404(request, exception):
+    
+    return render(request, "Admin/404_page.html")
+
+def loader_page(request):
+
+    return render(request, "Admin/loader_page.html")
 
 def admin_dashboard(request):
     user_id = request.session.get('user_id')
@@ -348,12 +393,16 @@ def user_index(request):
     print('index-id', customer_id)
     Customer_full_name = request.GET.get('Customer_full_name')
     print('index-name', Customer_full_name)
+    username = request.GET.get('username')
+    print('index-username', username)
+
 
     error_message = None
     data = {
         'event_name': event_name,
         'customer_id': customer_id,
         'Customer_full_name': Customer_full_name,
+        'username':username
     }
 
     if request.method == "POST":
@@ -366,7 +415,8 @@ def user_index(request):
         event_name = request.POST.get('event', event_name)
         customer_id = request.POST.get('customer_id', customer_id)
         Customer_full_name = request.POST.get('Customer_full_name', Customer_full_name)
-        print('POST parameters:', event_name, customer_id, Customer_full_name)
+        username = request.POST.get('username', username)
+        print('POST parameters:', event_name, customer_id, Customer_full_name, username)
 
 
         # Manual Validation
@@ -383,7 +433,7 @@ def user_index(request):
             user.save()
 
             # Redirecting to the OTP view with the appropriate query parameters
-            return redirect(reverse('user_otp') + f'?event={event_name}&customer_id={customer_id}&Customer_full_name={Customer_full_name}')
+            return redirect(reverse('user_otp') + f'?event={event_name}&customer_id={customer_id}&username={username}&Customer_full_name={Customer_full_name}')
 
         # If there are errors, populate the data dict with the form values
         if error_message:
@@ -395,7 +445,7 @@ def user_index(request):
                     'phone': phone,
                 }
             })
-            return redirect(reverse('user_index') + f'?event={event_name}&customer_id={customer_id}&Customer_full_name={Customer_full_name}',context=data)
+            return redirect(reverse('user_index') + f'?event={event_name}&customer_id={customer_id}&username={username}&Customer_full_name={Customer_full_name}')
             # return render(request, 'User/__index.html', context=data)
     
     return render(request, "User/__index.html", context=data)
@@ -409,6 +459,13 @@ def user_otp(request):
     print('otp-id',customer_id)
     Customer_full_name = request.GET.get('Customer_full_name', '')
     print('otp-name', Customer_full_name)
+    username = request.GET.get('username', '')
+    print('otp-username', username)
+
+
+    customer = AddNewCustomer.objects.get(pk=customer_id)
+    Customer_mobile = customer.Customer_mobile
+    print(Customer_mobile)
 
     error_message = None
 
@@ -421,7 +478,7 @@ def user_otp(request):
         # Validate the OTP (you can replace this with your own validation logic)
         if otp1 == '1' and otp2 == '2' and otp3 == '3' and otp4 == '4':
             # Passing event_name, customer_id, and Customer_full_name to the next page
-            return redirect(reverse('user_selfie') + f'?event={event_name}&customer_id={customer_id}&Customer_full_name={Customer_full_name}')
+            return redirect(reverse('user_selfie') + f'?event={event_name}&customer_id={customer_id}&username={username}&Customer_full_name={Customer_full_name}')
         else:
             error_message = "Incorrect OTP. Please try again."
 
@@ -431,6 +488,7 @@ def user_otp(request):
         'error_message': error_message,
         'customer_id': customer_id,
         'Customer_full_name': Customer_full_name,
+        'Customer_mobile': Customer_mobile
     }
 
     # Passing the context to the render function
@@ -440,9 +498,7 @@ def user_selfie(request):
     event_name = request.GET.get('event', '')
     customer_id = request.GET.get('customer_id', '')
     Customer_full_name = request.GET.get('Customer_full_name', '') 
-    user_id = request.session.get('user_id')
-    user = CustomUser.objects.get(pk=user_id)
-    username = user.username
+    username = request.GET.get('username', '')
     
     image_path = []
 

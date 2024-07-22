@@ -11,6 +11,8 @@
       <link rel="stylesheet" href="{% static 'Admin/dist/css/style.css' %}">
       <link rel="stylesheet"
          href="{% static 'Admin/dist/fontawesome/css/all.min.css' %}">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
       <script src="{% static 'Admin/dist/js/jquery.slim.min.js' %}"></script>
       <script src="{% static 'Admin/dist/js/popper.min.js' %}"></script>
       <script
@@ -96,14 +98,15 @@
                               </div>
                               <!--/.col-->
                               <div class="col-md-4">
-                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                       <span class="input-group-text"><i
-                                             class="fa fa-search"></i></span>
+                                 <form method="GET" action="{% url 'admin_home1' customer_id=customer_id %}">
+                                    <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <span class="input-group-text"><i
+                                                class="fa fa-search"></i></span>
+                                       </div>
+                                       <input type="text" class="form-control" name="search" placeholder="Search Events" value="{{ search_query }}">
                                     </div>
-                                    <input type="text" class="form-control"
-                                       placeholder="Search">
-                                 </div>
+                                 </form>
                               </div>
                               <!--/.col-->
                            </div>
@@ -117,6 +120,16 @@
                <!--/.card-->
                <div class="card shadow" style="height:calc(100vh - 140px)">
                   <div class="card-body">
+                     {% if messages %}
+                     {% for message in messages %}
+                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                             {{ message }}
+                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                     {% endfor %}
+                     {% endif %}
                      <div class="row">
                         {% for customer_name in customer_names %}
                         <div class="col-md-8 col-12">
@@ -131,14 +144,19 @@
                                     type="button" disabled style="opacity:1"><i
                                        class="fa fa-filter"></i></button>
                               </div>
+
                               <!--/.col-->
                               <div class="col-md-6">
-                                 <select class="form-control">
-                                    <option>Select Category</option>
-                                    <option>Wedding</option>
-                                    <option>Birthday</option>
-                                 </select>
+                                    <form method="GET" action="{% url 'admin_home1' customer_id=customer_id %}">
+                                       <select class="form-control" name="category" onchange="this.form.submit()">
+                                          <option>Select Category</option>
+                                          {% for event_name in all_event_names %}
+                                             <option value="{{ event_name }}" {% if event_name == selected_category %} selected {% endif %}>{{ event_name }}</option>
+                                          {% endfor %}
+                                       </select>
+                                    </form>
                               </div>
+
                               <!--/.col-->
                            </div>
                            <!--/.row-->
@@ -165,8 +183,10 @@
                              {% else %}
                                  <p>No images available for this event.</p>
                              {% endif %}
-                                 <a href="{% url 'user_images' event.id %}"><img src="{% static 'Admin/dist/img/View.png' %}" class="img-fluid view"></a>
-                                 <div class="dropdown share"
+                                 
+
+
+                                 {% comment %} <div class="dropdown share"
                                     style="z-index: 9999;">
                                     <form method="post" action="{% url 'admin_home1' customer_id=customer_id %}">
                                        {% csrf_token %}
@@ -176,28 +196,36 @@
                                        class="btn btn-default p-0">
                                        <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a>
                                     </button>
-                                    </form>
+                                    </form> {% endcomment %}
 
+                                 <div class="dropdown share"
+                                    style="z-index: 9999;">
+                                    <a href="{% url 'user_images' event.id %}"><img src="{% static 'Admin/dist/img/View.png' %}" class="img-fluid"></a>
+                                    {% comment %} <button type="button"
+                                       class="btn btn-default p-0"
+                                       data-toggle="dropdown">
+                                       <img src="{% static 'Admin/dist/img/Share.png' %}" class="img-fluid"></a>
+                                    </button> {% endcomment %}
+
+                                    
                                     <div class="dropdown-menu dropdown-menu-lg">
                                        <div class="row mx-0">
                                           <div class="col">
-                                             <a class="dropdown-item" href="#">
-                                                <img
-                                                   src="{% static 'Admin/dist/img/Copy Link.png' %}"
-                                                   class="img-fluid">
-                                             </a>
+                                             <a class="dropdown-item" href="">
+                                                <button onclick="copyToClipboard('{{ shareable_link }}')" style="border:none; background:none;">
+                                                <img src="{% static 'Admin/dist/img/Copy Link.png' %}" class="img-fluid"></a></button>
                                           </div>
+
                                           <!--/.col-->
                                           <div class="col">
-                                             <a class="dropdown-item" href="#">
-                                                <img
-                                                   src="{% static 'Admin/dist/img/Whatsapp.png' %}"
-                                                   class="img-fluid">
-                                             </a>
+                                             <a class="dropdown-item" href="https://wa.me/?text={{ shareable_link|urlencode }}" data-action="share/whatsapp/share" target="_blank">
+                                                   <img src="{% static 'Admin/dist/img/Whatsapp.png' %}" class="img-fluid"></a>
                                           </div>
+
+                                          
                                           <!--/.col-->
                                           <div class="col">
-                                             <a class="dropdown-item" href="#">
+                                             <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ shareable_link|urlencode }}" target="_blank">
                                                 <img
                                                    src="{% static 'Admin/dist/img/Fb1.png' %}"
                                                    class="img-fluid">
@@ -205,27 +233,19 @@
                                           </div>
                                           <!--/.col-->
                                           <div class="col">
-                                             <a class="dropdown-item" href="#">
+                                             <a class="dropdown-item" href="mailto:?subject=Check%20out%20this%20link&body={{ shareable_link|urlencode }}">
                                                 <img
                                                    src="{% static 'Admin/dist/img/Mail.png' %}"
                                                    class="img-fluid">
                                              </a>
                                           </div>
-
-                                          {% comment %} <!--/.col-->
-                                          <div class="col">
-                                             <a class="dropdown-item" href="#">
-                                                <img
-                                                   src="{% static 'Admin/dist/img/Telegram.png' %}"
-                                                   class="img-fluid">
-                                             </a>
-                                          </div> {% endcomment %}
-                                          <!--/.col-->
                                        </div>
                                        
                                        <!--/.row-->
                                     </div>
+                                    
                                  </div>
+                                 
                                  <a href="javascript:void(0)"
                                     data-toggle="modal"
                                     data-target="#deleteModal-{{ event.id }}">
@@ -342,10 +362,21 @@
                                  class="inputfile form-control" name="eventImages" accept="image/*"  multiple required>
                               </label>
                            </div>
+
+                           <!--/.col-->
+                           {% comment %} <div class="col-12 mb-3">
+                              <label>Upload 3 Background Images</label>
+                              <label class="uploadFile text-center">
+                                  <span class="filename">Select Files</span>
+                                  <i class="fas fa-upload fa-md ml-2"></i>
+                                  <input type="file" class="inputfile form-control limit" name="Bg_Image" accept="image/*" multiple required>
+                              </label>
+                          </div>{% endcomment %}
+
                            <!--/.col-->
                            <div class="col-12 text-center">
                               <button type="submit"
-                                 class="btn btn-primary btn-sm">Create
+                                 class="btn btn-primary btn-sm submit-btn">Create
                                  Event</button>
                               <button type="button"
                                  class="btn btn-danger btn-sm"
@@ -361,7 +392,17 @@
          </main>
          <!-- page-content" -->
       </div>
-      <!-- page-wrapper" -->
 
+      <!-- page-wrapper" -->
+      <script>
+         document.querySelector('.submit-btn').addEventListener('click', function(e) {
+             var fileInput = document.querySelector('.limit');
+             if (fileInput.files.length < 3) {
+                 alert('Please upload at least 3 background images.');
+                 e.preventDefault();  // Prevent form submission
+             }
+         });
+     </script> 
+     
    </body>
 </html>

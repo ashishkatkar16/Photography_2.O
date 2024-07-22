@@ -28,10 +28,10 @@
         
         <label>Enter 4-Digit PIN</label>
         <div class="d-flex items-center justify-content-center mx-0">
-          <input class="otp form-control mr-2 shadow" name="otp1" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 style = "width:50px;">
-                <input class="otp form-control  mr-2 shadow" name="otp2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 style = "width:50px;">
-                <input class="otp form-control  mr-2 shadow" name="otp3" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 style = "width:50px;">
-                <input class="otp form-control  mr-2 shadow" name="otp4" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 style = "width:50px;">
+          <input class="otp form-control mr-2 shadow" name="otp1" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 style = "width:36px;">
+                <input class="otp form-control  mr-2 shadow" name="otp2" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 style = "width:36px;">
+                <input class="otp form-control  mr-2 shadow" name="otp3" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 style = "width:36px;">
+                <input class="otp form-control  mr-2 shadow" name="otp4" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 style = "width:36px;">
               </div>
         
         <div class = "col-12 my-3">
@@ -40,8 +40,8 @@
         
         <div class = "col-12 mt-3 text-left">
           <small><span class = "text-primary">*Note:</span> If you don’t know your PIN, please contact the Event organizer:</small><br>
-          <small><span class = "text-primary">Email:</span> <a href = "mailto:Raj@gmail.com" class = "text-dark">Raj@gmail.com</a></small><br>
-          <small><span class = "text-primary">Phone:</span> <a href = "tel:+1 234 567 890" class = "text-dark">+1 234 567 890</a></small><br>
+          <small><span class = "text-primary">Name: </span>{{ Customer_full_name }}</a></small><br>
+          <small><span class = "text-primary">Phone:</span> <a href = "tel:{{Customer_mobile}}" class = "text-dark">{{ Customer_mobile }}</a></small><br>
         </div>
       </div>
     </form>

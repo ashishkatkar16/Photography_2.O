@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Background Images</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <form>
+        <div class="col-12 mb-3">
+            <label>Upload 3 Background Images</label>
+            <label class="uploadFile text-center">
+                <span class="filename">Select Files</span>
+                <i class="fas fa-upload fa-md ml-2"></i>
+                <input type="file" class="inputfile form-control" name="Bg_Image" accept="image/*" multiple required>
+            </label>
+        </div>
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <script>
+        document.querySelector('.submit-btn').addEventListener('click', function(e) {
+            var fileInput = document.querySelector('.inputfile');
+            if (fileInput.files.length < 3) {
+                alert('Please upload at least 3 background images!!!.');
+                e.preventDefault();  // Prevent form submission
+            }
+        });
+    </script>
+</body>
+</html>
